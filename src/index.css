@@ -3,3 +3,6 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+.Close_Button{
+    position: absolute; right: 0;
+}

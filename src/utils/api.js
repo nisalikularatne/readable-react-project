@@ -4,11 +4,11 @@
 const api = "http://localhost:5001";
 let token = localStorage.token;
 if (!token)
-        token = localStorage.token = Math.random().toString(36).substr(-8);
+    token = localStorage.token = Math.random().toString(36).substr(-8);
 
-    const headers = {
-        'Accept': 'application/json',
-        'Authorization': token
+const headers = {
+    'Accept': 'application/json',
+    'Authorization': token
 };
 
 export const getAllPosts = () =>
@@ -36,11 +36,38 @@ export const updatePostAPI = (post) => {
             ...headers,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(post)
+        body: JSON.stringify(post),
+        timestamp: JSON.stringify(post)
     }).then(res => res.json())
+}
+export const updateCommentAPI = (comment) => {
+    return fetch(`${api}/comments/${comment.id}`, {
+        method: 'PUT',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment),
+    }).then(res => res.json())
+}
+export const createComment = (comment) => {
+    fetch(`${api}/comments`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment)})
+        .then(res => res.json())
 }
 export const deletePost = (postId) =>{
     return fetch(`${api}/posts/${postId}`, {
+        method: 'DELETE',
+        headers
+    })
+}
+export const deleteComment = (commentId) =>{
+    return fetch(`${api}/comments/${commentId}`, {
         method: 'DELETE',
         headers
     })
@@ -55,4 +82,19 @@ export const votePostAPI = (postId, isUp) => {
         },
         body: JSON.stringify(body)
     }).then(res => res.json())
+}
+export const voteCommentAPI = (commentId,parentId, isUp) => {
+    const body = {option: isUp ? 'upVote':'downVote'}
+    return fetch(`${api}/comments/${commentId}`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    }).then(res => res.json())
+}
+export const fetchCommentsAPI = (postId) =>{
+    return fetch(`${api}/posts/${postId}/comments`, { headers })
+        .then(res => res.json())
 }

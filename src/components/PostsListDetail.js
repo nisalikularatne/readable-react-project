@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import * as api from '../utils/api'
 import  {deletePosts,votePost} from '../actions/post_action'
-
-
+import _ from 'lodash'
 class PostsListDetail extends Component {
     deletePost(postId,history) {
         api.deletePost(postId).then(data => {
@@ -18,15 +17,21 @@ class PostsListDetail extends Component {
 
     })
     }
+
     votePost(postId,isUp){
         api.votePostAPI(postId, isUp).then(data => {
             this.props.votePostDispatch(data)
         })
     }
 
+
+
+
     render() {
         const {post, fromList, history} = this.props
         console.log(this.props)
+
+
 
         return (
             <div>
@@ -35,10 +40,10 @@ class PostsListDetail extends Component {
                 { !fromList && (<p>Body: {post.body}</p>)}
                 <p>{'timestamp: ' +new Date(post.timestamp).toString().substr(0,16)}</p>
                 <p>{'Vote score: ' + post.voteScore}</p>
-                <p>{'Author: ' + post.author}</p>
+               <p>{'Author: ' + post.author}</p>
 
                 <div className='inner'>
-                    <Link to={`/post/${post.id}/edit`}><button>Edit Post</button></Link>
+                    <Link to={`/${post.category}/${post.id}/edit`}><button>Edit Post</button></Link>
                     <button onClick={()=>this.deletePost(post.id, fromList?undefined: history)} >Delete</button>
                     <button onClick={()=>this.votePost(post.id, true)}>Vote Up</button>
                     <button onClick={()=>this.votePost(post.id, false)} >Vote Down</button>
@@ -50,15 +55,21 @@ class PostsListDetail extends Component {
         )
     }
 }
-function mapStateToProps(state) {
+function mapStateToProps(state,{post}) {
+
     return {
-        posts:state.posts
-    };
+        posts:state.posts,
+        comments:_.filter(state.comments, comment => comment.parentId === post.id && !comment.deleted && !comment.parentDeleted)
+
+}
+
 }
 function mapDispatchToProps(dispatch) {
     return {
         deletePosts: (data) => dispatch(deletePosts(data)),
-        votePostDispatch:(data)=> dispatch(votePost(data))
+        votePostDispatch:(data)=> dispatch(votePost(data)),
+
+
     }
 }
 

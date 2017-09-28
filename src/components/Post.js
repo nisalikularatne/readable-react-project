@@ -31,13 +31,15 @@ class PostList extends Component {
             </select>
                 <br/><br/> <br/> <br/>
 
-                <div className='post-list'>
+                <div className='post-list' >
                     {this.props.posts.map((post) => (
                         <div key={post.id + guid()} >
-                            <Link to={`/post/${post.id}`}>Post Details</Link>
+                            <Link to={`/${post.category}/${post.id}`}>Post Details</Link>
                             <PostsListDetail post={post}/>
+
                         </div>
                     ))}
+                    <Link to={`/post/create`}>Create New Post</Link>
                 </div>
             </div>
         )

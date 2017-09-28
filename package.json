@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "glamor": "^2.20.40",
     "lodash": "^4.17.4",
     "lodash.find": "^4.6.0",
     "lodash.map": "^4.6.0",
@@ -10,6 +11,8 @@
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.1",
+    "react-modal": "^2.3.2",
+    "react-redux": "^5.0.6",
     "react-scripts": "1.0.11",
     "react-sort": "0.0.0",
     "redux": "^3.7.2",

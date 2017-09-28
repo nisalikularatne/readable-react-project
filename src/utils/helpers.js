@@ -7,3 +7,6 @@ export function guid() {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
 }
+export function arrayFromObject(obj, key = 'id') {
+    return Object.keys(obj).map(key => (obj[key]));
+}
