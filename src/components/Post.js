@@ -34,7 +34,7 @@ class PostList extends Component {
                 <div className='post-list' >
                     {this.props.posts.map((post) => (
                         <div key={post.id + guid()} >
-                            <Link to={`/${post.category}/${post.id}`}>Post Details</Link>
+
                             <PostsListDetail post={post}/>
 
                         </div>

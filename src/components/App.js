@@ -11,7 +11,7 @@ import CommentEdit from './CommentEdit'
 import CommentSubmitForm from './CommentSubmitForm'
 import  { fetchPosts } from '../actions/post_action'
 import  { fetchCategories } from '../actions/category_action'
-import {Switch,Route,withRouter } from 'react-router-dom'
+import {Switch,Route,withRouter,Link } from 'react-router-dom'
 
 class App extends Component {
 
@@ -29,6 +29,7 @@ class App extends Component {
 
     componentDidMount() {
         this.FetchPosts();
+        this.fetchCategories()
 
     }
 
@@ -38,19 +39,30 @@ class App extends Component {
     render() {
 
         return (
+            <div>
+            {this.props.categories.map((category) => (
+
+
+                <Link key={category.name} to={`/${category.path}`}>
+                    <h3>{category.name}</h3>
+                </Link>
+
+
+            ))}
 
                  <div className="app-wrapper">
                      <Switch>
                          <Route exact path="/" component={Post}/>)}/>
-                         <Route exact path="/:category/:postId/comment" component={CommentSubmitForm}/>
                          <Route name="CreatePage" exact path='/post/create' component={CreatePost}/>)}/>
-                         <Route name="categorybypage"  exact path='/:category' component={PostsByCategory}/>)}/>
                          <Route name="PostDetails"  exact path='/:category/:postId' component={PostDetail}/>)}/>
+                         <Route exact path="/:category/:postId/comment" component={CommentSubmitForm}/>
+                         <Route name="categorybypage"  exact path='/:category' component={PostsByCategory}/>)}/>
                          <Route name="PostEdits"  exact path='/:category/:postId/edit' component={PostEdit}/>)}/>
                          <Route name="CommentEdits"  exact path='/:postId/comment/:commentId/edit' component={CommentEdit}/>)}/>
 
                     </Switch>
                         </div>
+                </div>
                 );
             }
 

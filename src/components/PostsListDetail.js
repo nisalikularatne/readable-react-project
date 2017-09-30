@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import * as api from '../utils/api'
 import  {deletePosts,votePost} from '../actions/post_action'
+import  {fetchCategories} from '../actions/category_action'
 import _ from 'lodash'
 class PostsListDetail extends Component {
     deletePost(postId,history) {
@@ -17,6 +18,13 @@ class PostsListDetail extends Component {
 
     })
     }
+    fetchCategories() {
+        api.fetchAllCategories().then(categories => {
+            this.props.loadCategories(categories);
+        })
+    }
+
+
 
     votePost(postId,isUp){
         api.votePostAPI(postId, isUp).then(data => {
@@ -27,15 +35,22 @@ class PostsListDetail extends Component {
 
 
 
+
+
+
     render() {
-        const {post, fromList, history} = this.props
-        console.log(this.props)
+        const {post, fromList, history,categories} = this.props
+        console.log(categories)
 
 
 
         return (
+
             <div>
-                <h2>{'Title: ' + post.title}</h2>
+                <div className='categry-list' >
+
+
+                <Link to={`/${post.category}/${post.id}`}><h2>{'Title: ' + post.title}</h2></Link>
                 <Link to={`/${post.category}`}>{post.category}</Link>
                 { !fromList && (<p>Body: {post.body}</p>)}
                 <p>{'timestamp: ' +new Date(post.timestamp).toString().substr(0,16)}</p>
@@ -50,6 +65,7 @@ class PostsListDetail extends Component {
                 </div>
                 <br/> <br/> <br/> <br/>
             </div>
+                </div>
 
 
         )
@@ -59,8 +75,8 @@ function mapStateToProps(state,{post}) {
 
     return {
         posts:state.posts,
-        comments:_.filter(state.comments, comment => comment.parentId === post.id && !comment.deleted && !comment.parentDeleted)
-
+        comments:_.filter(state.comments, comment => comment.parentId === post.id && !comment.deleted && !comment.parentDeleted),
+        categories:state.categories
 }
 
 }
@@ -68,6 +84,9 @@ function mapDispatchToProps(dispatch) {
     return {
         deletePosts: (data) => dispatch(deletePosts(data)),
         votePostDispatch:(data)=> dispatch(votePost(data)),
+        loadCategories: (data) => dispatch(fetchCategories(data)),
+
+
 
 
     }

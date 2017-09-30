@@ -16,11 +16,9 @@ export function comments (state={}, action) {
                 return comments
             }
 
- break;
-        case EDIT_COMMENT:
-
-// eslint-disable-next-line
-                comments = state == null ? {} : state;
+        // eslint-disable-next-line
+        case EDIT_COMMENT:  // eslint-disable-next-line
+            comments = state == null ? {} : state;
             if(Array.isArray(action.comments) && action.comments.length > 0) {
                 for(let comment of action.comments) {
                     comments[ comment.id ] = comment
@@ -39,7 +37,7 @@ export function comments (state={}, action) {
     return comment
                 }
                 }
-break;
+// eslint-disable-next-line
         case DELETE_COMMENT:
             return state
         default:
