@@ -4,8 +4,9 @@
 import React, {Component} from 'react';
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import  {voteComment,deleteComment} from '../actions/comments_action'
+import  {voteComment,deleteComment,fetchCommentsById} from '../actions/comments_action'
 import  {editComment} from '../actions/comments_action'
+import  {fetchPost} from '../actions/post_action'
 import * as api from '../utils/api'
 class Comment extends Component {
 
@@ -15,9 +16,23 @@ class Comment extends Component {
         api.voteCommentAPI(commentId,parentId, isUp).then(data => {
             this.props.voteCommentDispatch(data)
         })
+        const postId= this.props.match.params.postId
+
+
+        this.FetchComments(postId)
+        this.FetchPost(postId)
+
+
     }
+    FetchComments(postId) {
 
-
+        this.props.loadComments(postId);
+    }
+    FetchPost(postId){
+        api.fetchpost(postId).then(postId => {
+            this.props.loadPost(postId);
+        })
+    }
 
 
     deleteComment(commentId,history) {
@@ -51,7 +66,7 @@ class Comment extends Component {
 
                     <Link to={`/${postId}/comment/${comment.id}/edit`}><button>Edit comment</button></Link>
                     <button onClick={()=>this.deleteComment(comment.id)}>Delete</button>
-                    <button  onClick={()=>this.voteComment(comment.id,postId, true)}>Vote Up</button>
+                    <button  onClick={()=>this.voteComment(comment.id,postId, true)} >Vote Up</button>
                     <button onClick={()=>this.voteComment(comment.id,postId, false)} >Vote Down</button>
 
 
@@ -77,7 +92,10 @@ function mapDispatchToProps(dispatch) {
     return {
         editComment:(data)=>dispatch(editComment(data)),
         voteCommentDispatch:(data)=> dispatch(voteComment(data)),
-        deleteComment:(data)=> dispatch(deleteComment(data))
+        deleteComment:(data)=> dispatch(deleteComment(data)),
+        loadComments: (data) => dispatch(fetchCommentsById(data)),
+        loadPost: (data) => dispatch(fetchPost(data))
+
 
     }
 }

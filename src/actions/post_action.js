@@ -2,6 +2,7 @@
  * Created by Nisali Kularatne on 31/08/2017.
  */
 export const FETCH_POSTS='FETCH_POSTS'
+export const FETCH_POST='FETCH_POST'
 export const ADD_POST='ADD_POST'
 export const DELETE_POST='DELETE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
@@ -25,6 +26,12 @@ export function addPost(post){
 export function deletePosts(postId) {
     return {
         type : DELETE_POST,
+        postId
+    }
+}
+export function fetchPost(postId) {
+    return {
+        type : FETCH_POST,
         postId
     }
 }

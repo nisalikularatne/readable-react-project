@@ -2,7 +2,7 @@
  * Created by Nisali Kularatne on 1/09/2017.
  */
 import { FETCH_POSTS,SORT_AESC_BY_TIMESTAMP,SORT_AESC_BY_VOTESCORE,ADD_POST,
-SORT_DESC_BY_TIMESTAMP,SORT_DESC_BY_VOTESCORE,DELETE_POST,UPDATE_POST,VOTE_POST} from '../actions/post_action'
+SORT_DESC_BY_TIMESTAMP,SORT_DESC_BY_VOTESCORE,DELETE_POST,UPDATE_POST,VOTE_POST,FETCH_POST} from '../actions/post_action'
 
 function sortingState(state, sortOrder) {
 
@@ -14,6 +14,10 @@ export function posts(state = [], action){
     switch (action.type) {
         case FETCH_POSTS:
             return action.posts.filter(post=> post.deleted === false)
+        case FETCH_POST:
+            return state.filter((post) => {
+                return post.id === action.postId.id
+            })
         case ADD_POST:
             return state.concat(action.post)
         case DELETE_POST:

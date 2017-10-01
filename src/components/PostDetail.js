@@ -9,7 +9,8 @@ import _ from 'lodash';
 import { guid } from '../utils/helpers'
 import { withRouter ,Link} from 'react-router-dom'
 import { connect } from 'react-redux'
-import  {fetchComments} from '../actions/comments_action'
+import  {fetchComments,fetchCommentsById} from '../actions/comments_action'
+import  {fetchPost} from '../actions/post_action'
 import * as api from '../utils/api'
 
 import Comment from './Comment'
@@ -18,15 +19,21 @@ class PostDetail extends Component {
 
 
     FetchComments(postId) {
-        api.fetchCommentsAPI(postId).then(comments => {
-            this.props.loadComments({comments});
+
+            this.props.loadComments(postId);
+    }
+    FetchPost(postId){
+        api.fetchpost(postId).then(postId => {
+            this.props.loadPost(postId);
         })
     }
 
 
-    componentDidMount() {
-        const postId = this.props.match.params.postId
+    componentWillMount() {
+
+        const postId= this.props.match.params.postId
         this.FetchComments(postId)
+        this.FetchPost(postId)
 
     }
 
@@ -94,7 +101,9 @@ function mapStateToProps(state,{match}) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        loadComments: (data) => dispatch(fetchComments(data)),
+        loadComments: (data) => dispatch(fetchCommentsById(data)),
+        loadPost: (data) => dispatch(fetchPost(data))
+
 
     }
 }

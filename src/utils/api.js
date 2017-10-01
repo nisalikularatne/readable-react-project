@@ -98,3 +98,7 @@ export const fetchCommentsAPI = (postId) =>{
     return fetch(`${api}/posts/${postId}/comments`, { headers })
         .then(res => res.json())
 }
+export const fetchpost = (postId) =>{
+    return fetch(`${api}/posts/${postId}`, { headers })
+        .then(res => res.json())
+}
