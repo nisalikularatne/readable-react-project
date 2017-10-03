@@ -4,7 +4,7 @@
 import  {FETCH_COMMENTS} from '../actions/comments_action'
 import  {EDIT_COMMENT,CREATE_COMMENT,VOTE_COMMENT,DELETE_COMMENT} from '../actions/comments_action'
 export function comments (state={}, action) {
-    const { parentId,commentId,updatedComment} = action
+    const { parentId,commentId,updatedComment,comment_id} = action
     switch (action.type) {
 
         case FETCH_COMMENTS:// eslint-disable-next-line
@@ -37,9 +37,12 @@ export function comments (state={}, action) {
     return comment
                 }
                 }
+
 // eslint-disable-next-line
         case DELETE_COMMENT:
-            return state
+            var newState = {...state}
+            delete newState[comment_id]
+            return newState;
         default:
             return state
     }

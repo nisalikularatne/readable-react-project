@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import * as api from '../utils/api'
 import  {deletePosts,votePost} from '../actions/post_action'
+import  {fetchCommentsById} from '../actions/comments_action'
 import  {fetchCategories} from '../actions/category_action'
 import _ from 'lodash'
 class PostsListDetail extends Component {
@@ -31,7 +32,16 @@ class PostsListDetail extends Component {
             this.props.votePostDispatch(data)
         })
     }
+    FetchComments(postId) {
 
+        this.props.loadComments(postId);
+    }
+    componentWillMount() {
+
+        const {post}=this.props
+        this.FetchComments(post.id)
+
+    }
 
 
 
@@ -57,7 +67,8 @@ class PostsListDetail extends Component {
                 <p>{'Vote score: ' + post.voteScore}</p>
                <p>{'Author: ' + post.author}</p>
 
-                <div className='inner'>
+
+                    <div className='inner'>
                     <Link to={`/${post.category}/${post.id}/edit`}><button>Edit Post</button></Link>
                     <button onClick={()=>this.deletePost(post.id, fromList?undefined: history)} >Delete</button>
                     <button onClick={()=>this.votePost(post.id, true)}>Vote Up</button>
@@ -85,6 +96,7 @@ function mapDispatchToProps(dispatch) {
         deletePosts: (data) => dispatch(deletePosts(data)),
         votePostDispatch:(data)=> dispatch(votePost(data)),
         loadCategories: (data) => dispatch(fetchCategories(data)),
+        loadComments: (data) => dispatch(fetchCommentsById(data))
 
 
 

@@ -23,7 +23,7 @@ export function fetchComments({comments}){
         comments
     }
 }
-export const fetchCommentsById = (postId) => {
+export const fetchCommentsById =(postId) => {
     return (dispatch) => {
         fetch(`${api}/posts/${postId}/comments`, { headers })
             .then(res => res.json())
@@ -50,12 +50,7 @@ export function createComment ({comment, parentId}){
             comment
     }
 }
-export function deleteComment(commentId) {
-    return {
-        type : DELETE_COMMENT,
-        commentId
-    }
-}
+
 export function voteComment(updatedComment,parentId,commentId) {
     return {
         type : VOTE_COMMENT,
@@ -64,7 +59,12 @@ export function voteComment(updatedComment,parentId,commentId) {
         commentId
     }
 }
-
+export function deleteComment(comment_id) {
+    return {
+        type: DELETE_COMMENT,
+        comment_id
+    };
+}
 
 
 

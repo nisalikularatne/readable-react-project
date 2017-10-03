@@ -35,17 +35,16 @@ class Comment extends Component {
     }
 
 
-    deleteComment(commentId,history) {
+    deleteComment(commentId,id) {
         api.deleteComment(commentId).then(data => {
             if (data.status === 200) {
                 this.props.deleteComment(commentId)
-                if (history) {
-                    history.push('/')
-                }
             }
 
-
         })
+
+
+
     }
 
 

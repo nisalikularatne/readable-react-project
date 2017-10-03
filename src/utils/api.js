@@ -72,6 +72,7 @@ export const deleteComment = (commentId) =>{
         headers
     })
 }
+
 export const votePostAPI = (postId, isUp) => {
     const body = {option: isUp ? 'upVote':'downVote'}
     return fetch(`${api}/posts/${postId}`, {
@@ -95,6 +96,10 @@ export const voteCommentAPI = (commentId,parentId, isUp) => {
     }).then(res => res.json())
 }
 export const fetchCommentsAPI = (postId) =>{
+    return fetch(`${api}/posts/${postId}/comments`, { headers })
+        .then(res => res.json())
+}
+export const fetchCommentsbyId = (postId) =>{
     return fetch(`${api}/posts/${postId}/comments`, { headers })
         .then(res => res.json())
 }
