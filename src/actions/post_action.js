@@ -11,7 +11,12 @@ export const SORT_DESC_BY_TIMESTAMP = 'SORT_DESC_BY_TIMESTAMP'
 export const SORT_AESC_BY_VOTESCORE = 'SORT_AESC_BY_VOTESCORE'
 export const SORT_DESC_BY_VOTESCORE = 'SORT_DESC_BY_VOTESCORE'
 export const VOTE_POST = 'VOTE_POST'
-
+export function fetchPosts({posts}){
+    return{
+        type: FETCH_POSTS,
+        posts,
+    }
+}
 export function addPost(post){
     return {
         type : ADD_POST,
