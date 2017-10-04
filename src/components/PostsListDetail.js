@@ -36,15 +36,7 @@ class PostsListDetail extends Component {
 
         this.props.loadComments(postId);
     }
-    componentWillMount() {
-
-        const {post}=this.props
-        this.FetchComments(post.id)
-
-    }
-
-
-
+   
 
 
 

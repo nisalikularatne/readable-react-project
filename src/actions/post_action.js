@@ -1,6 +1,7 @@
 /**
  * Created by Nisali Kularatne on 31/08/2017.
  */
+import * as api from '../utils/api'
 export const FETCH_POSTS='FETCH_POSTS'
 export const FETCH_POST='FETCH_POST'
 export const ADD_POST='ADD_POST'
@@ -11,11 +12,19 @@ export const SORT_DESC_BY_TIMESTAMP = 'SORT_DESC_BY_TIMESTAMP'
 export const SORT_AESC_BY_VOTESCORE = 'SORT_AESC_BY_VOTESCORE'
 export const SORT_DESC_BY_VOTESCORE = 'SORT_DESC_BY_VOTESCORE'
 export const VOTE_POST = 'VOTE_POST'
-export function fetchPosts({posts}){
+export function loadPosts({posts}){
     return{
         type: FETCH_POSTS,
         posts,
     }
+}
+export const fetchPosts = () => dispatch => {
+    return api.getAllPosts().then(posts => {
+        dispatch(loadPosts({posts}));
+    })
+        .catch(function(err) {
+            console.log('fetch err: ' + err.message)
+        })
 }
 export function addPost(post){
     return {

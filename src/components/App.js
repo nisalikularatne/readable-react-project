@@ -15,20 +15,16 @@ import {Switch,Route,withRouter,Link } from 'react-router-dom'
 
 class App extends Component {
 
-    FetchPosts() {
-        api.getAllPosts().then(posts => {
-            this.props.loadPosts({posts});
-        })
-    }
+
 
     fetchCategories() {
             api.fetchAllCategories().then(categories => {
-                this.props.loadCategories(categories);
+                this.props.fetchCategories(categories);
             })
     }
 
     componentDidMount() {
-        this.FetchPosts();
+        this.props.fetchPosts();
         this.fetchCategories()
 
     }
@@ -49,6 +45,7 @@ class App extends Component {
 
 
             ))}
+                <Link to={`/`}>Home Page</Link>
 
                  <div className="app-wrapper">
                      <Switch>
@@ -83,5 +80,5 @@ function mapDispatchToProps (dispatch) {
 
     }
 }
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps,{fetchPosts,fetchCategories})(App));
 //name
