@@ -9,8 +9,8 @@ import _ from 'lodash';
 import { guid } from '../utils/helpers'
 import { withRouter ,Link} from 'react-router-dom'
 import { connect } from 'react-redux'
-import  {fetchComments,fetchCommentsById} from '../actions/comments_action'
-import  {fetchPost} from '../actions/post_action'
+import  {fetchCommentsById} from '../actions/comments_action'
+import  {fetchPost,fetchPosts} from '../actions/post_action'
 import * as api from '../utils/api'
 
 import Comment from './Comment'
@@ -34,7 +34,6 @@ class PostDetail extends Component {
         const postId= this.props.match.params.postId
         this.FetchComments(postId)
         this.FetchPost(postId)
-
     }
 
     render() {
@@ -102,7 +101,8 @@ function mapStateToProps(state,{match}) {
 function mapDispatchToProps(dispatch) {
     return {
         loadComments: (data) => dispatch(fetchCommentsById(data)),
-        loadPost: (data) => dispatch(fetchPost(data))
+        loadPost: (data) => dispatch(fetchPost(data)),
+        loadPosts: (data) => dispatch(fetchPosts(data))
 
 
     }

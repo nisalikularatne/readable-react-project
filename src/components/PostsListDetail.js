@@ -19,6 +19,10 @@ class PostsListDetail extends Component {
 
     })
     }
+    componentDidMount() {
+        const { post} = this.props
+        this.FetchComments(post.id)
+    }
     fetchCategories() {
         api.fetchAllCategories().then(categories => {
             this.props.loadCategories(categories);
@@ -36,13 +40,15 @@ class PostsListDetail extends Component {
 
         this.props.loadComments(postId);
     }
+
    
 
 
 
     render() {
-        const {post, fromList, history,categories} = this.props
+        const {post, fromList, history,categories,comments} = this.props
         console.log(categories)
+        let postComments = _.filter(comments, comment => comment.parentId === post.id)
 
 
 
@@ -59,12 +65,16 @@ class PostsListDetail extends Component {
                 <p>{'Vote score: ' + post.voteScore}</p>
                <p>{'Author: ' + post.author}</p>
 
+                    <div className="counts">
 
+                        {postComments && <p className="post-counter">Comments: {postComments.length}</p>}
+                    </div>
                     <div className='inner'>
                     <Link to={`/${post.category}/${post.id}/edit`}><button>Edit Post</button></Link>
                     <button onClick={()=>this.deletePost(post.id, fromList?undefined: history)} >Delete</button>
                     <button onClick={()=>this.votePost(post.id, true)}>Vote Up</button>
                     <button onClick={()=>this.votePost(post.id, false)} >Vote Down</button>
+
                 </div>
                 <br/> <br/> <br/> <br/>
             </div>

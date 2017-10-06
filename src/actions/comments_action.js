@@ -17,6 +17,9 @@ const headers = {
     'Accept': 'application/json',
     'Authorization': token
 };
+
+
+
 export function fetchComments({comments}){
     return{
         type: FETCH_COMMENTS,

@@ -5,7 +5,7 @@
  * Created by Nisali Kularatne on 21/08/2017.
  */
 import React, {Component} from 'react';
-import { withRouter } from 'react-router-dom'
+import { withRouter,Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 class PostsByCategory extends Component {
     componentDidMount() {
@@ -23,7 +23,7 @@ class PostsByCategory extends Component {
                     <div className="post">
                         <div className="container">
                             <header className="post__header">
-                                <h1 className="post__title title">{post.title}</h1>
+                                <Link to={`/${post.category}/${post.id}`}><h1>{'Title: ' + post.title}</h1></Link>
                                 <div className="post__specs">
                                     <time className="post__spec post__timestamp timestamp">{new Date(post.timestamp).toString().substr(0,16)}</time><br/>
                                     <div className="post__spec post__vote-count vote-count">{post.voteScore}</div>

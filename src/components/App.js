@@ -10,22 +10,17 @@ import CreatePost from './CreatePost'
 import CommentEdit from './CommentEdit'
 import CommentSubmitForm from './CommentSubmitForm'
 import  { fetchPosts } from '../actions/post_action'
-import  { fetchCategories } from '../actions/category_action'
+import  { getCategories } from '../actions/category_action'
 import {Switch,Route,withRouter,Link } from 'react-router-dom'
 
 class App extends Component {
 
 
 
-    fetchCategories() {
-            api.fetchAllCategories().then(categories => {
-                this.props.fetchCategories(categories);
-            })
-    }
+
 
     componentDidMount() {
-        this.props.fetchPosts();
-        this.fetchCategories()
+        this.props.getCategories()
 
     }
 
@@ -74,11 +69,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps (dispatch) {
     return {
         loadPosts: (data) => dispatch(fetchPosts(data)),
-        loadCategories: (data) => dispatch(fetchCategories(data)),
+        loadCategories: (data) => dispatch(getCategories(data)),
 
 
 
     }
 }
-export default withRouter(connect(mapStateToProps,{fetchPosts,fetchCategories})(App));
+export default withRouter(connect(mapStateToProps,{fetchPosts,getCategories})(App));
 //name
