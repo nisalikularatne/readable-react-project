@@ -27,7 +27,7 @@ class CreatePost extends Component {
             author: e.target.author.value,
             category: e.target.category.value,
             timestamp: Date.now(),
-            voteScore:0
+            voteScore:1
         }
            api.createPost(post)
         this.props.addPost(post, this.props.history.push('/'))

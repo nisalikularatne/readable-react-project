@@ -35,7 +35,7 @@ class Comment extends Component {
     }
 
 
-    deleteComment(commentId,id) {
+    deleteComment(commentId) {
         api.deleteComment(commentId).then(data => {
             if (data.status === 200) {
                 this.props.deleteComment(commentId)

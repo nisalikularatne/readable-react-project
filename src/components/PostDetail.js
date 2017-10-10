@@ -11,11 +11,29 @@ import { withRouter ,Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import  {fetchCommentsById} from '../actions/comments_action'
 import  {fetchPost,fetchPosts} from '../actions/post_action'
+import  {deletePosts,votePost} from '../actions/post_action'
 import * as api from '../utils/api'
 
 import Comment from './Comment'
 
 class PostDetail extends Component {
+    votePost(postId,isUp){
+        api.votePostAPI(postId, isUp).then(data => {
+            this.props.votePostDispatch(data)
+        })
+    }
+
+    deletePost(postId) {
+        api.deletePost(postId).then(data => {
+            if (data.status === 200) {
+                this.props.deletePosts(postId)
+                this.props.history.push('/')
+
+            }
+
+
+        })
+    }
 
 
     FetchComments(postId) {
@@ -29,7 +47,7 @@ class PostDetail extends Component {
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
 
         const postId= this.props.match.params.postId
         this.FetchComments(postId)
@@ -37,7 +55,7 @@ class PostDetail extends Component {
     }
 
     render() {
-        const {posts} = this.props
+        const {posts,fromList} = this.props
         const postId = this.props.match.params.postId
         console.log(this.props)
         if (this.props.posts.length === 0) {
@@ -62,6 +80,13 @@ class PostDetail extends Component {
                                     <div className="post__spec post__vote-count vote-count">VoteScore: {post.voteScore}</div>
                                     <div className="post__spec post__author">Author: {post.author}</div>
                                     <div className="comment_number">Comment Length: {this.props.comments.length}</div>
+                                    <div className='inner'>
+                                        <Link to={`/${post.category}/${post.id}/edit`}><button>Edit Post</button></Link>
+                                        <button onClick={()=>this.deletePost(post.id)} >Delete</button>
+                                        <button onClick={()=>this.votePost(post.id, true)}>Vote Up</button>
+                                        <button onClick={()=>this.votePost(post.id, false)} >Vote Down</button>
+
+                                    </div>
                                 </div>
                             </header>
                             <div className="post__content">
@@ -102,7 +127,9 @@ function mapDispatchToProps(dispatch) {
     return {
         loadComments: (data) => dispatch(fetchCommentsById(data)),
         loadPost: (data) => dispatch(fetchPost(data)),
-        loadPosts: (data) => dispatch(fetchPosts(data))
+        loadPosts: (data) => dispatch(fetchPosts(data)),
+        deletePosts: (data) => dispatch(deletePosts(data)),
+        votePostDispatch:(data)=> dispatch(votePost(data))
 
 
     }
